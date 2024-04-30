@@ -1,6 +1,8 @@
 package dev.bitbite.surrealdb;
 
-public class Person {
+import dev.bitbite.surrealdb.orm.Identifiable;
+
+public class Person implements Identifiable {
     public String name;
     public String id;
 
@@ -15,13 +17,14 @@ public class Person {
         return name;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
     @Override
     public String toString() {
-        return "User(name=" + this.name + ", id=" + this.id + ")";
+        return "Person(name=" + this.name + ", id=" + this.id + ")";
     }
 
     @Override

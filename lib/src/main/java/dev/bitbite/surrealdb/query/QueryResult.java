@@ -33,6 +33,17 @@ public class QueryResult<T> {
         return result;
     }
 
+    public static <T> List<QueryResult<T>> parseArray(Class<T> type, String json) {
+        Type queryResultType = TypeToken.getParameterized(QueryResult.class, type).getType();
+        Type resultType = TypeToken.getParameterized(List.class, queryResultType).getType();
+        try {
+            return new Gson().fromJson(json, resultType);
+        } catch (Exception e) {
+            System.out.println(json);
+            return null;
+        }
+    }
+
     public static <T> List<QueryResult<T>> parseArray(Type type, String json) {
         Type queryResultType = TypeToken.getParameterized(QueryResult.class, type).getType();
         Type resultType = TypeToken.getParameterized(List.class, queryResultType).getType();

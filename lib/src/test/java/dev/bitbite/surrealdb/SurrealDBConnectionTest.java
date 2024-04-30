@@ -54,12 +54,12 @@ public class SurrealDBConnectionTest {
         person = createResult.getResult().get(0);
 
         var selectResult = conn.select(Person.class, "person");
-        assertEquals("OK", selectResult.get(0).getStatus());
-        assertEquals(person, selectResult.get(0).getResult().get(0));
+        assertEquals("OK", selectResult.getStatus());
+        assertEquals(person, selectResult.getResult().get(0));
 
         var selectResult2 = conn.select(Person.class, "person", person.getId().split(":")[1]);
-        assertEquals("OK", selectResult2.get(0).getStatus());
-        assertEquals(person, selectResult2.get(0).getResult().get(0));
+        assertEquals("OK", selectResult2.getStatus());
+        assertEquals(person, selectResult2.getResult().get(0));
 
         person.setName("netcode2");
         var updateResult = conn.update("person", person).get(0);

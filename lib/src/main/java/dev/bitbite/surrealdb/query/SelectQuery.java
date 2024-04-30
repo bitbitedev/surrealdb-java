@@ -9,6 +9,8 @@ public class SelectQuery extends Query {
     private String table;
     private List<WhereClause> whereClauses;
     private List<OrderBy> orderByClauses;
+    private Integer limit;
+    private Integer offset;
     
     public SelectQuery(String[] fields){
         this.fields = fields;
@@ -26,6 +28,11 @@ public class SelectQuery extends Query {
         return this;
     }
 
+    public SelectQuery where(WhereClause whereClause){
+        this.whereClauses.add(whereClause);
+        return this;
+    }
+
     public SelectQuery orderBy(String field){
         this.orderByClauses.add(new OrderBy(field));
         return this;
@@ -33,6 +40,21 @@ public class SelectQuery extends Query {
 
     public SelectQuery orderBy(String field, OrderBy.Order order){
         this.orderByClauses.add(new OrderBy(field, order));
+        return this;
+    }
+
+    public SelectQuery orderBy(OrderBy orderBy){
+        this.orderByClauses.add(orderBy);
+        return this;
+    }
+
+    public SelectQuery limit(int limit){
+        this.limit = limit;
+        return this;
+    }
+
+    public SelectQuery offset(int offset){
+        this.offset = offset;
         return this;
     }
 
@@ -65,6 +87,14 @@ public class SelectQuery extends Query {
                     sb.append(", ");
                 }
             }
+        }
+        if(limit != null){
+            sb.append(" LIMIT ");
+            sb.append(limit);
+        }
+        if(offset != null){
+            sb.append(" START ");
+            sb.append(offset);
         }
         return sb.toString();
     }

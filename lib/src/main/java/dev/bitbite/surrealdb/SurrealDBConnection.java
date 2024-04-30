@@ -118,22 +118,22 @@ public class SurrealDBConnection {
         return true;
     }
     
-    public <T> List<QueryResult<T>> select(Type type, String thing){
+    public <T> QueryResult<T> select(Class<T> type, String thing){
         HttpResponse<String> response = GET("/key/"+thing);
 
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(type, response.body());
+        return QueryResult.parseArray(type, response.body()).get(0);
     }
 
-    public <T> List<QueryResult<T>> select(Type type, String table, String id){
+    public <T> QueryResult<T> select(Class<T> type, String table, String id){
         HttpResponse<String> response = GET("/key/"+table+"/"+id);
         
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(type, response.body());
+        return QueryResult.parseArray(type, response.body()).get(0);
     }
 
     public <T> List<QueryResult<T>> create(String table, T data){
@@ -142,7 +142,7 @@ public class SurrealDBConnection {
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(data.getClass(), response.body());
+        return QueryResult.parseArray((Type) data.getClass(), response.body());
     }
 
     public <T> List<QueryResult<T>> create(String table, String id, T data){
@@ -151,7 +151,7 @@ public class SurrealDBConnection {
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(data.getClass(), response.body());
+        return QueryResult.parseArray((Type) data.getClass(), response.body());
     }
 
     public <T> List<QueryResult<T>> update(String table, T data){
@@ -160,16 +160,16 @@ public class SurrealDBConnection {
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
         
-        return QueryResult.parseArray(data.getClass(), response.body());
+        return QueryResult.parseArray((Type) data.getClass(), response.body());
     }
 
-    public <T> List<QueryResult<T>> update(String table, String id, Object data){
+    public <T> List<QueryResult<T>> update(String table, String id, T data){
         HttpResponse<String> response = PUT("/key/"+table+"/"+id, new Gson().toJson(data));
         
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(data.getClass(), response.body());
+        return QueryResult.parseArray((Type) data.getClass(), response.body());
     }
 
     public <T> List<QueryResult<T>> merge(String table, Object data){
@@ -178,7 +178,7 @@ public class SurrealDBConnection {
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(data.getClass(), response.body());
+        return QueryResult.parseArray((Type) data.getClass(), response.body());
     }
 
     public <T> List<QueryResult<T>> merge(String table, String id, Object data){
@@ -187,10 +187,10 @@ public class SurrealDBConnection {
         if(response.body().equals("There was a problem with authentication"))
             throw new AuthenticationException(response.body());
 
-        return QueryResult.parseArray(data.getClass(), response.body());
+        return QueryResult.parseArray((Type) data.getClass(), response.body());
     }
 
-    public <T> List<QueryResult<T>> delete(Type type, String table){
+    public <T> List<QueryResult<T>> delete(Class<T> type, String table){
         HttpResponse<String> response = DELETE("/key/"+table);
         
         if(response.body().equals("There was a problem with authentication"))
@@ -199,7 +199,7 @@ public class SurrealDBConnection {
         return QueryResult.parseArray(type, response.body());
     }
 
-    public <T> List<QueryResult<T>> delete(Type type, String table, String id){
+    public <T> List<QueryResult<T>> delete(Class<T> type, String table, String id){
         HttpResponse<String> response = DELETE("/key/"+table+"/"+id);
         
         if(response.body().equals("There was a problem with authentication"))
@@ -208,7 +208,7 @@ public class SurrealDBConnection {
         return QueryResult.parseArray(type, response.body());
     }
 
-    public <T> List<QueryResult<T>> query(Type type, String query){
+    public <T> List<QueryResult<T>> query(Class<T> type, String query){
         HttpResponse<String> response = POST("/sql", query);
         
         if(response.body().equals("There was a problem with authentication"))
@@ -217,7 +217,7 @@ public class SurrealDBConnection {
         return QueryResult.parseArray(type, response.body());
     }
 
-    public <T> List<QueryResult<T>> query(Type type, Query query){
+    public <T> List<QueryResult<T>> query(Class<T> type, Query query){
         return query(type, query.toString());
     }
 
