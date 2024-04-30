@@ -11,9 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
-import dev.bitbite.surrealdb.query.OrderBy.Order;
-import dev.bitbite.surrealdb.query.Query;
-
 @TestInstance(Lifecycle.PER_METHOD)
 public class SurrealDBConnectionTest {
 
