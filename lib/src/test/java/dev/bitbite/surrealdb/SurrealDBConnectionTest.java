@@ -19,7 +19,6 @@ public class SurrealDBConnectionTest {
     @BeforeAll
     public static void init() {
         conn = new SurrealDBConnection(URI.create("http://localhost:8000"));
-        conn.use("test", "test");
     }
     
     @Test
@@ -45,6 +44,7 @@ public class SurrealDBConnectionTest {
     @Test
     void testCRUD() {
         testSignin();
+        conn.use("test", "test");
         conn.delete(Person.class, "person");
 
         Person person = new Person("netcode");
@@ -73,9 +73,9 @@ public class SurrealDBConnectionTest {
 
     public static void main(String[] args) {
         var conn = new SurrealDBConnection(URI.create("http://localhost:8000"));
+        conn.signin("root", "pass");
         conn.use("test", "test");
         // conn.signin("user_scope", Map.of("username","test","password","test"));
-        conn.signin("root", "pass");
         //conn.select(User.class, "user");
     }
 
