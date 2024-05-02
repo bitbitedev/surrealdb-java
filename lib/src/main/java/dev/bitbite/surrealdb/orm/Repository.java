@@ -3,10 +3,7 @@ package dev.bitbite.surrealdb.orm;
 import java.util.List;
 
 import dev.bitbite.surrealdb.SurrealDBConnection;
-import dev.bitbite.surrealdb.query.OrderBy;
-import dev.bitbite.surrealdb.query.Query;
 import dev.bitbite.surrealdb.query.SelectQuery;
-import dev.bitbite.surrealdb.query.WhereClause;
 
 public class Repository<T extends Identifiable> {
     
