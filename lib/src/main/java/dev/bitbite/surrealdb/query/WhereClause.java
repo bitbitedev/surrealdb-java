@@ -1,5 +1,7 @@
 package dev.bitbite.surrealdb.query;
 
+import java.util.List;
+
 public class WhereClause {
 
     private String field, operator;
@@ -38,6 +40,88 @@ public class WhereClause {
                 break;
             case Boolean b:
                 sb.append(b);
+                break;
+            case List<?> list:
+                sb.append("[");
+                for(int i = 0; i < list.size(); i++){
+                    sb.append(list.get(i));
+                    if(i < list.size() - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case String[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append("'");
+                    sb.append(array[i]);
+                    sb.append("'");
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case int[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append(array[i]);
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case double[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append(array[i]);
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case float[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append(array[i]);
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case long[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append(array[i]);
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case boolean[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append(array[i]);
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
+                break;
+            case Object[] array:
+                sb.append("[");
+                for(int i = 0; i < array.length; i++){
+                    sb.append(array[i]);
+                    if(i < array.length - 1){
+                        sb.append(", ");
+                    }
+                }
+                sb.append("]");
                 break;
             default:
                 sb.append(value);
