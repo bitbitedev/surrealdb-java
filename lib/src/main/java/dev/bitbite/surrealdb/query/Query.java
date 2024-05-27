@@ -9,4 +9,8 @@ public abstract class Query {
         return new SelectQuery(fields);
     }
 
+    public static SelectQuery selectAll(){
+        return new SelectQuery("*");
+    }
+
 }
