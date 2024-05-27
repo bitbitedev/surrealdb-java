@@ -18,6 +18,10 @@ public class QueryTest {
         assertEquals("SELECT * FROM person WHERE name INSIDE ['netcode', 'ThatsNasu']", query.toString());
         query = Query.selectAll().from("person").where("age", "NOT INSIDE", new Integer[] { 1,2,3 });
         assertEquals("SELECT * FROM person WHERE age NOT INSIDE [1, 2, 3]", query.toString());
+        query = Query.selectAll().from("person").where("age", "NOT INSIDE", new int[] { 1,2,3 });
+        assertEquals("SELECT * FROM person WHERE age NOT INSIDE [1, 2, 3]", query.toString());
+        query = Query.selectAll().from("person").orderByRand();
+        assertEquals("SELECT * FROM person ORDER BY RAND()", query.toString());
     }
 
 }

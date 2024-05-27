@@ -24,14 +24,14 @@ public class ORMTest {
         Repository<Person> personRepository = new Repository<>(Person.class, conn);
         personRepository.delete(new Person("netcode"));
         Person person = new Person("netcode");
-        personRepository.add(person);
+        assertEquals(person.getName(), personRepository.add(person).getName());
         assertEquals(person.getName(), personRepository.getAll().get(0).getName());
         person = personRepository.getAll().get(0);
         person.setName("newname");
-        personRepository.update(person);
+        assertEquals(person, personRepository.update(person));
         assertEquals(person.getName(), personRepository.get(person.getId()).getName());
         person = personRepository.get(person.getId());
-        personRepository.delete(person);
+        assertEquals(person, personRepository.delete(person));
         assertEquals(0, personRepository.getAll().size());
     }
 
