@@ -15,8 +15,8 @@ public class ORMTest {
     @BeforeAll
     static void init() {
         conn = new SurrealDBConnection(URI.create("http://localhost:8000"));
-        conn.use("test", "test");
         conn.signin("root", "pass");
+        conn.use("test", "test");
     }
 
     @Test

@@ -38,13 +38,13 @@ public class SurrealDBConnectionTest {
 
     @Test
     void testScopeSignin() {
-        assertTrue(conn.signin("user_scope", Map.of("username","test","password","test")));
+        assertTrue(conn.signin("user", Map.of("username","test","password","test")));
     }
 
     @Test
     void testCRUD() {
-        testSignin();
         conn.use("test", "test");
+        testScopeSignin();
         conn.delete(Person.class, "person");
 
         Person person = new Person("netcode");
@@ -73,10 +73,10 @@ public class SurrealDBConnectionTest {
 
     public static void main(String[] args) {
         var conn = new SurrealDBConnection(URI.create("http://localhost:8000"));
-        conn.signin("root", "pass");
+        // conn.signin("root", "pass");
         conn.use("test", "test");
-        // conn.signin("user_scope", Map.of("username","test","password","test"));
-        //conn.select(User.class, "user");
+        conn.signin("user", Map.of("username","test","password","test"));
+        conn.select(Person.class, "person");
     }
 
 }
