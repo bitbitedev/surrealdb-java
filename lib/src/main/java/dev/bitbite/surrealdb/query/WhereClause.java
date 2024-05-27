@@ -6,6 +6,7 @@ public class WhereClause {
 
     private String field, operator;
     private Object value;
+    private String combined;
     
     public WhereClause(String field, String operator, Object value){
         this.field = field;
@@ -13,8 +14,15 @@ public class WhereClause {
         this.value = value;
     }
 
+    public WhereClause(String combined) {
+        this.combined = combined;
+    }
+
     @Override
     public String toString() {
+        if(combined != null){
+            return combined;
+        }
         StringBuilder sb = new StringBuilder();
         sb.append(field);
         sb.append(" ");
