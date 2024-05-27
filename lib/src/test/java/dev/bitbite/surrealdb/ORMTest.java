@@ -5,7 +5,9 @@ import java.net.URI;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import dev.bitbite.surrealdb.exception.SurrealException;
 import dev.bitbite.surrealdb.orm.Repository;
 
 public class ORMTest {
@@ -26,6 +28,8 @@ public class ORMTest {
         Person person = new Person("netcode");
         assertEquals(person.getName(), personRepository.add(person).getName());
         assertEquals(person.getName(), personRepository.getAll().get(0).getName());
+        // Adding an entry that violates the unique constraint should throw an exception
+        assertThrows(SurrealException.class, () -> personRepository.add(new Person("netcode")));
         person = personRepository.getAll().get(0);
         person.setName("newname");
         assertEquals(person, personRepository.update(person));

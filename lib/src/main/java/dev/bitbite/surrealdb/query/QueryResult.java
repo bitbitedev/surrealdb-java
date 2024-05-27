@@ -3,8 +3,11 @@ package dev.bitbite.surrealdb.query;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import org.json.JSONArray;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import dev.bitbite.surrealdb.exception.SurrealException;
 
 public class QueryResult<T> {
     
@@ -45,6 +48,11 @@ public class QueryResult<T> {
     }
 
     public static <T> List<QueryResult<T>> parseArray(Type type, String json) {
+        JSONArray jsonObj = new JSONArray(json);
+        if(!jsonObj.getJSONObject(0).getString("status").equals("OK")){
+            throw new SurrealException(jsonObj.getJSONObject(0).getString("result"));
+        }
+
         Type queryResultType = TypeToken.getParameterized(QueryResult.class, type).getType();
         Type resultType = TypeToken.getParameterized(List.class, queryResultType).getType();
         return new Gson().fromJson(json, resultType);
