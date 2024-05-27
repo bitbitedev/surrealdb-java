@@ -17,16 +17,16 @@ public class Repository<T extends Identifiable> {
         this.connection = connection;
     }
 
-    public void add(T object) {
-        connection.create(this.tableName, object);
+    public T add(T object) {
+        return connection.create(this.tableName, object).get(0).getResult().get(0);
     }
 
-    public void update(T object) {
-        connection.update(this.tableName, object.getId().split(":")[1], object);
+    public T update(T object) {
+        return connection.update(this.tableName, object.getId().split(":")[1], object).get(0).getResult().get(0);
     }
 
-    public void delete(T object) {
-        connection.delete(this.type, this.tableName, object.getId());
+    public T delete(T object) {
+        return connection.delete(this.type, this.tableName, object.getId()).get(0).getResult().get(0);
     }
 
     public T get(String id) {
