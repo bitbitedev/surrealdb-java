@@ -16,12 +16,11 @@ public class OrderBy {
 
     public OrderBy(String field){
         this.field = field;
-        this.order = Order.ASC;
     }
 
     @Override
     public String toString() {
-        return field + " " + order.toString();
+        return field + ((order != null) ? " " + order.toString() : "");
     }
 
 }

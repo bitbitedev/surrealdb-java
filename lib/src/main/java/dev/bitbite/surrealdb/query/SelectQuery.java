@@ -12,7 +12,7 @@ public class SelectQuery extends Query {
     private Integer limit;
     private Integer offset;
     
-    public SelectQuery(String[] fields){
+    public SelectQuery(String... fields){
         this.fields = fields;
         this.whereClauses = new ArrayList<>();
         this.orderByClauses = new ArrayList<>();
@@ -30,6 +30,11 @@ public class SelectQuery extends Query {
 
     public SelectQuery where(WhereClause whereClause){
         this.whereClauses.add(whereClause);
+        return this;
+    }
+
+    public SelectQuery orderByRand() {
+        this.orderByClauses.add(new OrderBy("RAND()"));
         return this;
     }
 
