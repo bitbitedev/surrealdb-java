@@ -28,6 +28,11 @@ public class SelectQuery extends Query {
         return this;
     }
 
+    public SelectQuery where(String combined){
+        this.whereClauses.add(new WhereClause(combined));
+        return this;
+    }
+
     public SelectQuery where(WhereClause whereClause){
         this.whereClauses.add(whereClause);
         return this;
