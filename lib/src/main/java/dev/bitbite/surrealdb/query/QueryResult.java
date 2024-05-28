@@ -42,6 +42,7 @@ public class QueryResult<T> {
         try {
             return new Gson().fromJson(json, resultType);
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(json);
             return null;
         }
