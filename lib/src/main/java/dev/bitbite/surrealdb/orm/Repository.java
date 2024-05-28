@@ -30,7 +30,7 @@ public class Repository<T extends Identifiable> {
     }
 
     public T get(String id) {
-        return connection.select(this.type, this.tableName, id.split(":")[1]).getResult().get(0);
+        return connection.select(this.type, this.tableName, id.contains(":") ? id.split(":")[1] : id).getResult().get(0);
     }
 
     public List<T> getSpecific(SelectQuery query) {
