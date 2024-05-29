@@ -160,6 +160,34 @@ public class SurrealDBConnection {
         this.token = response.getString("token");
         return true;
     }
+
+    /**
+     * Sign up to the SurrealDB server using root authentication
+     * @param scope scope to use
+     * @param args  arguments for the scope
+     * @return  true if the sign up was successful, false otherwise
+     */
+    public boolean signup(String scope, Map<String, String> args) {
+        if(this.namespace == null || this.database == null){
+            System.err.println("namespace or database not defined");
+            return false;
+        }
+
+        JSONObject data = new JSONObject();
+        data.put("ns", this.namespace);
+        data.put("db", this.database);
+        data.put("sc", scope);
+        args.entrySet().stream().forEach(arg -> data.put(arg.getKey(), arg.getValue()));
+
+        JSONObject response = new JSONObject(POST("/signup", data.toString()).body());
+        if(response.getInt("code") != 200)
+            return false;
+        if(!response.has("token")) 
+            return false;
+
+        this.token = response.getString("token");
+        return true;
+    }
     
     /**
      * Select data from the SurrealDB server
