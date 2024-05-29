@@ -9,7 +9,7 @@ public class Repository<T extends Identifiable> {
     
     private final Class<T> type;
     private final String tableName;
-    private final SurrealDBConnection connection;
+    private SurrealDBConnection connection;
 
     public Repository(Class<T> type, SurrealDBConnection connection) {
         this.type = type;
@@ -41,4 +41,7 @@ public class Repository<T extends Identifiable> {
         return connection.select(type, tableName).getResult();
     }
 
+    public void setConnection(SurrealDBConnection connection) {
+        this.connection = connection;
+    }
 }
