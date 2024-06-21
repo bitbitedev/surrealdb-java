@@ -5,3 +5,6 @@
 build
 
 .vscode
+
+secring.gpg
+gradle.properties

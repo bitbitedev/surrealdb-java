@@ -2,22 +2,42 @@ package dev.bitbite.surrealdb.query;
 
 import java.util.List;
 
+/**
+ * Represents a WHERE clause in a database query.
+ */
 public class WhereClause {
 
     private String field, operator;
     private Object value;
     private String combined;
     
+    /**
+     * Constructs a WhereClause object with the specified field, operator, and value.
+     * 
+     * @param field the field to compare
+     * @param operator the comparison operator
+     * @param value the value to compare against
+     */
     public WhereClause(String field, String operator, Object value){
         this.field = field;
         this.operator = operator;
         this.value = value;
     }
 
+    /**
+     * Constructs a WhereClause object with the specified combined condition.
+     * 
+     * @param combined the combined condition
+     */
     public WhereClause(String combined) {
         this.combined = combined;
     }
 
+    /**
+     * Returns the string representation of the WhereClause object.
+     * 
+     * @return the string representation of the WhereClause object
+     */
     @Override
     public String toString() {
         if(combined != null){

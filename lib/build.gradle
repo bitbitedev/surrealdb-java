@@ -1,10 +1,15 @@
 plugins {
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
 }
 
 repositories {
     mavenCentral()
 }
+
+group = 'dev.bitbite'
+version = '0.1.0'
 
 dependencies {
     // Use JUnit Jupiter for testing.
@@ -19,6 +24,65 @@ dependencies {
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+    }
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+            groupId = 'dev.bitbite'
+            artifactId = 'surrealdb-java'
+			      version = '0.1.0'
+            pom {
+                name = 'A surrealdb connector'
+                description = 'A Java library to connect to surrealdb'
+                url = 'https://github.com/bitbitedev/surrealdb-java'
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'https://github.com/bitbitedev/surrealdb-java/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'bitbite'
+                        name = 'Bitbite Team'
+                        email = 'team@bitbite.dev'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/bitbitedev/surrealdb-java.git'
+                    url = 'https://github.com/bitbitedev/surrealdb-java'
+                }
+            }
+
+        }
+    }
+    repositories {
+    	maven {
+            name = "OSSRH"
+    		credentials {
+    			username = System.getenv("MAVEN_USERNAME")
+    			password = System.getenv("MAVEN_PASSWORD")
+    		}
+    		def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+    		def snapshotRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    		url = version.endsWith('SNAPSHOT') ? snapshotRepoUrl : releasesRepoUrl
+    	}
+    }
+}
+artifacts {
+    archives javadocJar, sourcesJar
+}
+signing {
+    sign publishing.publications.maven
+}
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
     }
 }
 
